@@ -26,6 +26,10 @@ public class HardDisk {
 	/*while (x != null){
 	 * parse current line;
 	 * JOB 1 17 2
+	 * if line contains "//"
+	 * 	-is header
+	 * else
+	 * 	-is instruction
 	 * string [] = 
 	 * initialize job header
 	 * Job length = 17;
@@ -35,5 +39,11 @@ public class HardDisk {
 	 * }
 	 * read next job header;
 	 * }
+	 * 
+	 * Get()
+	 * {
+	 * 		Get intstuction at this address
+	 * }
+	 * 
 	 */
 }}
