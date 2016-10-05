@@ -4,7 +4,9 @@ import java.io.*;
 
 public class HardDisk extends Driver
 {
-	
+	static int jobNumber = 0;
+	static int lineNumber;
+	static int jobPriority;
 
 	public static void input()
 	{
@@ -21,7 +23,15 @@ public class HardDisk extends Driver
 			{
 				stringbuf.append(line).append("\n");
 				System.out.println(line);
-				if (line.contains("//"))
+				if (line.contains("//")) //is job header
+				{
+					String jobHeader[] = line.split(" ");
+					jobHeader[2] = jobNumber;
+					jobHeader[3] = lineNumber;
+					jobHeader[4] = jobPriority;
+					
+				}
+				else
 				{
 					
 				}
