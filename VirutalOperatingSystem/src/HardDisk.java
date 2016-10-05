@@ -21,6 +21,10 @@ public class HardDisk extends Driver
 			{
 				stringbuf.append(line).append("\n");
 				System.out.println(line);
+				if (line.contains("//"))
+				{
+					
+				}
 			}
 			bufferedReader.close();
 		}
