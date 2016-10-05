@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 //HDD contains an array of strings and a list of PCBs
 
-public class HardDisk 
+public class HardDisk extends Driver
 {
 	
 	static void input()
