@@ -6,6 +6,7 @@ public class HardDisk {
 	String filename = "Program-File.txt";
 	String line = null;
 	StringBuffer stringbuf = new StringBuffer();
+	
 	try{
 		FileReader filereader = new FileReader(filename);
 		BufferedReader bufferedReader = new BufferedReader(filereader);
