@@ -5,7 +5,7 @@ import java.io.*;
 public class HardDisk extends Driver
 {
 	
-	static void input()
+	public static void input()
 	{
 		String filename = "Program-File.txt";
 		String line = null;
@@ -19,6 +19,7 @@ public class HardDisk extends Driver
 			while((line = bufferedReader.readLine()) != null)
 			{
 				stringbuf.append(line).append("\n");
+				System.out.println(line);
 			}
 			bufferedReader.close();
 		}
