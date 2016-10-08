@@ -4,10 +4,26 @@ import java.io.*;
 
 public class HardDisk extends Driver
 {
-	static int jobNumber = 0;
-	static int lineNumber;
-	static int jobPriority;
+	public static int jobNumber;
+	public static int programCounter;
+	public static int jobPriority;
+	public static int jobSize;
+	public static int dataCounter;
+	public static ArrayList<PCB> pcbList;
+	public static ArrayList<String> hdData;
 
+	
+	public HardDisk(){
+		jobNumber = 0;
+		programCounter = 0;
+		jobPriority = 0;
+		jobSize = 0;
+		dataCounter = 0;
+		pcbList = new ArrayList<PCB>();
+		hdData = new ArrayList<String>();
+	
+	}
+	
 	public static void input()
 	{
 		String filename = "Program-File.txt";
@@ -22,20 +38,28 @@ public class HardDisk extends Driver
 			while((line = bufferedReader.readLine()) != null)
 			{
 				stringbuf.append(line).append("\n");
-				System.out.println(line);
-				if (line.contains("//")) //is job header
+				//System.out.println(line);
+				if (line.contains("JOB")) //is job header
 				{
+					// JOB 1 17 2
 					String jobHeader[] = line.split(" ");
-					jobHeader[2] = jobNumber;
-					jobHeader[3] = lineNumber;
-					jobHeader[4] = jobPriority;
+					jobNumber = Integer.parseInt(jobHeader[2], 16);
+					jobSize = Integer.parseInt(jobHeader[3], 16);
+					jobPriority = Integer.parseInt(jobHeader[4], 16);
+					programCounter = hdData.size();
+					dataCounter = programCounter+jobSize;
+					//dataEnd = dataCounter + 43
+					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter));
 					
 				}
-				else
+				else if(line.contains("0x"))
 				{
-					
+					String[] job = line.split("0x");
+					hdData.add(job[1]);
 				}
 			}
+			for (PCB t : pcbList)
+				System.out.println(t.toString());
 			bufferedReader.close();
 		}
 		catch(FileNotFoundException ex1)
@@ -47,6 +71,7 @@ public class HardDisk extends Driver
 			System.out.println("Error: IO");
 		}
 	}
+	
 }
 
 

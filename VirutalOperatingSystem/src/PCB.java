@@ -19,9 +19,32 @@ public class PCB {
 	//status_info:		// pointer to ‘ready-list of active processes’ or
 						// ‘resource-list on blocked processes’
 	//priority: integer;	// of the process, extracted from the //JOB control line
-
-	PCB(){
-		
+	public int jobNumber;
+	public int programCounter;
+	public int jobPriority;
+	public int jobSize;
+	public int dataCounter;
+	PCB()
+	{
+		jobNumber = -1;
+		programCounter = -1;
+		jobPriority = -1;
+		jobSize = -1;
+		dataCounter = -1;
+	}
+	
+	PCB(int jobNumber, int jobSize, int jobPriority, int programCounter, int dataCounter)
+	{
+		this.jobNumber = jobNumber;
+		this.jobSize = jobSize;
+		this.jobPriority = jobPriority;
+		this.programCounter = programCounter;
+		this.dataCounter = dataCounter;
+	}
+	
+	public String toString()
+	{
+		return ("job number: " + jobNumber + " Program Counter: " + programCounter + " priority: " + jobPriority);
 	}
 	
 }
