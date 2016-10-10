@@ -74,6 +74,17 @@ public class HardDisk extends Driver
 		{
 			System.out.println("Error: IO");
 		}
+		
+	}
+	
+	public PCB firstLine()
+	{
+		return pcbList.get(0);
+	}
+	
+	public String getInstruction(int index)
+	{
+		return hdData.get(index);
 	}
 	
 }
