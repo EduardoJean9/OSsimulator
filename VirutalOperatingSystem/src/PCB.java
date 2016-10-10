@@ -24,6 +24,7 @@ public class PCB {
 	public int jobPriority;
 	public int jobSize;
 	public int dataCounter;
+	
 	PCB()
 	{
 		jobNumber = -1;

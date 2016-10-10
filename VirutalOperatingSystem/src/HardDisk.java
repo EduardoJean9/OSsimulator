@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-//HDD contains an array of strings and a list of PCBs
+
 
 public class HardDisk extends Driver
 {
@@ -13,7 +13,8 @@ public class HardDisk extends Driver
 	public static ArrayList<String> hdData;
 
 	
-	public HardDisk(){
+	public HardDisk()
+	{
 		jobNumber = 0;
 		programCounter = 0;
 		jobPriority = 0;
@@ -38,7 +39,7 @@ public class HardDisk extends Driver
 			while((line = bufferedReader.readLine()) != null)
 			{
 				stringbuf.append(line).append("\n");
-				//System.out.println(line);
+				
 				if (line.contains("JOB")) //is job header
 				{
 					// JOB 1 17 2
@@ -48,18 +49,21 @@ public class HardDisk extends Driver
 					jobPriority = Integer.parseInt(jobHeader[4], 16);
 					programCounter = hdData.size();
 					dataCounter = programCounter+jobSize;
-					//dataEnd = dataCounter + 43
 					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter));
 					
 				}
-				else if(line.contains("0x"))
+				else if(line.contains("0x")) //Job is either data or intruction code
 				{
 					String[] job = line.split("0x");
 					hdData.add(job[1]);
 				}
+				else; //process is a //DATA or //END
+				
 			}
-			for (PCB t : pcbList)
-				System.out.println(t.toString());
+			//print out each job header
+//			for (PCB t : pcbList)
+//				System.out.println(t.toString());
+			
 			bufferedReader.close();
 		}
 		catch(FileNotFoundException ex1)
