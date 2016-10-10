@@ -9,7 +9,7 @@ public class OS {
 		public static void longTermSchedular()
 		{
 			//get the size of the next job from HD
-			
+			pcbList.get(0);
 			
 			//ask the RAM if it has room
 		}
