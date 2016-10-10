@@ -969,3 +969,9 @@ org.eclipse.core.runtime.CoreException: Cannot determine URI for '/VirutalOperat
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
 !SUBENTRY 2 org.eclipse.core.filebuffers 4 0 2016-10-10 15:19:16.585
 !MESSAGE Cannot determine URI for '/VirutalOperatingSystem/src/Driver.java'.
+
+!ENTRY org.eclipse.jface.text 2 0 2016-10-10 15:23:31.904
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2016-10-10 15:23:31.907
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'

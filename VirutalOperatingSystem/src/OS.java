@@ -10,6 +10,7 @@ public class OS {
 		{
 			//get the size of the next job from HD
 			
+			
 			//ask the RAM if it has room
 		}
 		
