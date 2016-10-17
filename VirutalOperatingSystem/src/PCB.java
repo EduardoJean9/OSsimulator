@@ -43,6 +43,48 @@ public class PCB {
 		this.dataCounter = dataCounter;
 	}
 	
+	
+	
+	public int getJobNumber() {
+		return jobNumber;
+	}
+
+	public void setJobNumber(int jobNumber) {
+		this.jobNumber = jobNumber;
+	}
+
+	public int getProgramCounter() {
+		return programCounter;
+	}
+
+	public void setProgramCounter(int programCounter) {
+		this.programCounter = programCounter;
+	}
+
+	public int getJobPriority() {
+		return jobPriority;
+	}
+
+	public void setJobPriority(int jobPriority) {
+		this.jobPriority = jobPriority;
+	}
+
+	public int getJobSize() {
+		return jobSize;
+	}
+
+	public void setJobSize(int jobSize) {
+		this.jobSize = jobSize;
+	}
+
+	public int getDataCounter() {
+		return dataCounter;
+	}
+
+	public void setDataCounter(int dataCounter) {
+		this.dataCounter = dataCounter;
+	}
+
 	public String toString()
 	{
 		return ("job number: " + jobNumber + " Program Counter: " + programCounter + " priority: " + jobPriority);
