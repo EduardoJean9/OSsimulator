@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class RAM {
 	
@@ -12,7 +13,7 @@ public class RAM {
 		ramData = new String[numpages * pagesize];
 		this.numpages = numpages;
 		this.pagesize = pagesize;
-		for(int i = 0; i < numpages, i++)
+		for(int i = 0; i < numpages; i++)
 		{
 			pageTable[i][0] = -1;
 			pageTable[i][1] = i;
@@ -45,21 +46,61 @@ public class RAM {
 	
 	public boolean canFit(PCB in)
 	{
-		
+		int jobSize = in.getJobSize();
+		int pagesNeeded = jobSize / pagesize;
+		int freePages = 0;
+		if(jobSize % pagesize == 0) {/*Do nothing*/}
+		else 
+			pagesNeeded++;
+		for(int i = 0; i < numpages; i++)
+		{
+			if(pageTable[i][0] == -1)
+			{
+				freePages++;
+			} 
+		}
+		if(pagesNeeded <= freePages)
+			return true;
+		else
+			return false;
 	}
 	
-	//finds empty memory location and stores 'in'.  Returns memory location.
-	public static int storeRAM(String in)
+	public void Load(PCB n)
 	{
-		for(int i=0;i<31;i++)
+		int jobSize = n.getJobSize();
+		int pagesNeeded = jobSize / pagesize;
+		ArrayList<Integer> allocatedPages = new ArrayList<Integer>();
+		if(jobSize % pagesize == 0) {/*Do nothing*/}
+		else 
+			pagesNeeded++;
+		for(int i = 0; i < numpages; i++)
 		{
-			if(ramData.get(i) == null)
+			if(pageTable[i][0] == -1)
 			{
-				ramData.set(i, in);
-				return i;
+				pageTable[i][0] = n.getJobNumber();
+				allocatedPages.add(i);
+				pagesNeeded--;
+			}
+			if(pagesNeeded == 0)
+				break;
+		}
+		for(int i = 0; i < jobSize; i++)
+		{
+			int pageNum = i / pagesize;
+			int offSet = i % pagesize;
+			int hdIndex = n.getProgramCounter() + i;
+			ramData[(allocatedPages.get(pageNum)* pagesize) + offSet] = HardDisk.hdData.get(hdIndex);
+		}
+	}
+	
+	public void Deallocate (PCB a)
+	{
+		for (int i = 0; i < numpages; i++)
+		{
+			if(pageTable[i][0] == a.getJobNumber())
+			{
+				pageTable[i][0] = -1;
 			}
 		}
-		return -1;
-	}
-	
+	}	
 }
