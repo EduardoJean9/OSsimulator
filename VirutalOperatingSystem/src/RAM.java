@@ -6,9 +6,11 @@ public class RAM {
 	public String[] ramData;
 	public int numpages;
 	public int pagesize;
+	HardDisk hd;
 	
-	public RAM(int numpages, int pagesize)
+	public RAM(int numpages, int pagesize, HardDisk hd)
 	{
+		this.hd = hd;
 		pageTable = new int[numpages][2];
 		ramData = new String[numpages * pagesize];
 		this.numpages = numpages;
@@ -89,7 +91,7 @@ public class RAM {
 			int pageNum = i / pagesize;
 			int offSet = i % pagesize;
 			int hdIndex = n.getProgramCounter() + i;
-			ramData[(allocatedPages.get(pageNum)* pagesize) + offSet] = HardDisk.hdData.get(hdIndex);
+			ramData[(allocatedPages.get(pageNum)* pagesize) + offSet] = hd.getInstruction(hdIndex);
 		}
 	}
 	
@@ -102,5 +104,20 @@ public class RAM {
 				pageTable[i][0] = -1;
 			}
 		}
-	}	
+	}
+	
+	public void CoreDump()
+	{
+		if(ramData[0] == null)
+		{
+			System.out.println("[]");
+		}
+		else
+		{
+			for(String l : ramData)
+			{
+				System.out.println(l);
+			}			
+		}
+	}
 }

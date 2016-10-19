@@ -2,15 +2,15 @@ import java.util.*;
 import java.io.*;
 
 
-public class HardDisk extends Driver
+public class HardDisk
 {
-	public static int jobNumber;
-	public static int programCounter;
-	public static int jobPriority;
-	public static int jobSize;
-	public static int dataCounter;
-	public static ArrayList<PCB> pcbList;
-	public static ArrayList<String> hdData;
+	public int jobNumber;
+	public int programCounter;
+	public int jobPriority;
+	public int jobSize;
+	public int dataCounter;
+	public ArrayList<PCB> pcbList;
+	public ArrayList<String> hdData;
 
 	
 	public HardDisk()
@@ -25,7 +25,7 @@ public class HardDisk extends Driver
 	
 	}
 	
-	public static void input()
+	public void input()
 	{
 		String filename = "Program-File.txt";
 		String line = null;
