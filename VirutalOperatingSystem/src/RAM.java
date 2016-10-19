@@ -5,7 +5,7 @@ public class RAM {
 	public int[][] pageTable; //Column 0 Job Num, Column 1 Page Num
 	public String[] ramData;
 	public int numpages;
-	public int pagesize;
+	public static int pagesize;
 	HardDisk hd;
 	
 	public RAM(int numpages, int pagesize, HardDisk hd)
@@ -15,6 +15,7 @@ public class RAM {
 		ramData = new String[numpages * pagesize];
 		this.numpages = numpages;
 		this.pagesize = pagesize;
+		
 		for(int i = 0; i < numpages; i++)
 		{
 			pageTable[i][0] = -1;
@@ -89,9 +90,9 @@ public class RAM {
 		for(int i = 0; i < jobSize; i++)
 		{
 			int pageNum = i / pagesize;
-			int offSet = i % pagesize;
+			int offset = i % pagesize;
 			int hdIndex = n.getProgramCounter() + i;
-			ramData[(allocatedPages.get(pageNum)* pagesize) + offSet] = hd.getInstruction(hdIndex);
+			ramData[(allocatedPages.get(pageNum)* pagesize) + offset] = hd.getInstruction(hdIndex);
 		}
 	}
 	
