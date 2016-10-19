@@ -2,7 +2,7 @@
 
 public class CPU {
 	
-	static void contextSwitchIn()
+	static void contextSwitchIn(PCB in)
 	{
 		/**
 		 * Context Switch In
