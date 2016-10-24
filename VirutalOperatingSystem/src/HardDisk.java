@@ -52,7 +52,7 @@ public class HardDisk
 					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter));
 					
 				}
-				else if(line.contains("0x")) //Job is either data or intruction code
+				else if(line.contains("0x")) //Job is either data or instruction code
 				{
 					String[] job = line.split("0x");
 					hdData.add(job[1]);

@@ -7,7 +7,11 @@ public class CPU {
 	public int jobPriority = -1;
 	public int jobSize = -1;
 	public int dataCounter = 1;
-	
+	public RAM ram;
+	public CPU(RAM i)
+	{
+		ram = i;
+	}
 	/*
 	 * Context Switch In
 	 * Array
@@ -35,12 +39,51 @@ public class CPU {
 		return out;
 	}
 	
+	private static String hexToBinary(String hex) {		
+		char[] num = hex.toCharArray();
+		String bin_num = "";
+		for(char c : num){
+			bin_num += (String.format("%4s", Integer.toBinaryString(Integer.parseInt(c+"", 16))).replace(" ", "0"));
+		}
+		return bin_num;
+	}
+	
 	public void run()
 	{
 		while (!stateArray[5])
 		{
+			String instruction = ram.getRAM(jobNumber, programCounter);
+			String format = hexToBinary(instruction);
+			String upToNCharacters = format.substring(0, Math.min(format.length(), 2));
 			
+			if (upToNCharacters.equals("00"))
+			{
+				
+			}
 			
+			else if (upToNCharacters.equals("01"))
+			{
+				
+			}
+			
+			else if (upToNCharacters.equals("10"))
+			{
+				
+			}
+			
+			else if (upToNCharacters.equals("11"))
+			{
+				
+			}
+			
+			else
+				System.out.println("Error in decoding. First two bits of instruction are: " +  upToNCharacters);
+			
+			programCounter++;
+			if (programCounter >= jobSize)
+			{
+				stateArray[5] = true;
+			}
 		}
 	}
 }
