@@ -15,8 +15,7 @@ public class CPU {
 	}
 	
 	/*
-	 * Context Switch In
-	 * Array
+	 *  Flag Array
 	 *  0. Idle
 	 *  1. Send to IO queue
 	 *  2. send to wait queue
@@ -25,7 +24,13 @@ public class CPU {
 	 *  5. interrupt
 	 */
 	boolean stateArray[] = {true, false, false, false, false, false};
+	/*
+	 * register array
+	 * register 0 is the accumulator
+	 * register 1 is always set to 0 
+	 */
 	
+	int register[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	public void contextSwitchIn(PCB in)
 	{
 		this.jobNumber = in.getJobNumber();;
