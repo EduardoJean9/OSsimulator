@@ -8,10 +8,12 @@ public class CPU {
 	public int jobSize = -1;
 	public int dataCounter = 1;
 	public RAM ram;
+	
 	public CPU(RAM i)
 	{
 		ram = i;
 	}
+	
 	/*
 	 * Context Switch In
 	 * Array
@@ -22,8 +24,8 @@ public class CPU {
 	 *  4. send to ready queue
 	 *  5. interrupt
 	 */
-	
 	boolean stateArray[] = {true, false, false, false, false, false};
+	
 	public void contextSwitchIn(PCB in)
 	{
 		this.jobNumber = in.getJobNumber();;
@@ -56,22 +58,22 @@ public class CPU {
 			String format = hexToBinary(instruction);
 			String upToNCharacters = format.substring(0, Math.min(format.length(), 2));
 			
-			if (upToNCharacters.equals("00"))
+			if (upToNCharacters.equals("00")) //Arithmetic instruction format
 			{
 				
 			}
 			
-			else if (upToNCharacters.equals("01"))
+			else if (upToNCharacters.equals("01")) //Conditional Branch and Immediate format
 			{
 				
 			}
 			
-			else if (upToNCharacters.equals("10"))
+			else if (upToNCharacters.equals("10")) //Unconditional Jump format
 			{
 				
 			}
 			
-			else if (upToNCharacters.equals("11"))
+			else if (upToNCharacters.equals("11")) //Input and Output instruction format
 			{
 				
 			}
