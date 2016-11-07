@@ -61,30 +61,43 @@ public class CPU {
 		{
 			String instruction = ram.getRAM(jobNumber, programCounter);
 			String format = hexToBinary(instruction);
-			String upToNCharacters = format.substring(0, Math.min(format.length(), 2));
+			String instructionBin = format.substring(0, Math.min(format.length(), 2));
 			
-			if (upToNCharacters.equals("00")) //Arithmetic instruction format
+			if (instructionBin.equals("00")) //Arithmetic instruction format
 			{
 				
 			}
 			
-			else if (upToNCharacters.equals("01")) //Conditional Branch and Immediate format
+			else if (instructionBin.equals("01")) //Conditional Branch and Immediate format
 			{
 				
 			}
 			
-			else if (upToNCharacters.equals("10")) //Unconditional Jump format
+			else if (instructionBin.equals("10")) //Unconditional Jump format
 			{
 				
 			}
 			
-			else if (upToNCharacters.equals("11")) //Input and Output instruction format
+			else if (instructionBin.equals("11")) //Input and Output instruction format
 			{
-				
+				String opcodeStr = instructionBin.substring(2, 8);
+				int opcode = Integer.parseInt(opcodeStr, 2);
+				opcodeStr = Integer.toString(opcode, 16);
+				switch (opcodeStr)
+				{
+					case "0":
+						break;
+					case "1":
+						break;
+				}
+				//opcode for 11 can only rd or wr
+				//convert next four bits to decimal
+				//convert next for bits to decimal
+				//convert address into decimal
 			}
 			
 			else
-				System.out.println("Error in decoding. First two bits of instruction are: " +  upToNCharacters);
+				System.out.println("Error in decoding. First two bits of instruction are: " +  instructionBin);
 			
 			programCounter++;
 			if (programCounter >= jobSize)
