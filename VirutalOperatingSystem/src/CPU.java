@@ -80,20 +80,43 @@ public class CPU {
 			
 			else if (instructionBin.equals("11")) //Input and Output instruction format
 			{
-				String opcodeStr = instructionBin.substring(2, 8);
-				int opcode = Integer.parseInt(opcodeStr, 2);
-				opcodeStr = Integer.toString(opcode, 16);
-				switch (opcodeStr)
+				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
+				int opcodeConv = Integer.parseInt(opcode, 2);
+				opcode = Integer.toString(opcodeConv, 16);
+				
+				String reg1 = instructionBin.substring(8, 12); //convert reg 1 and reg 2 to decimal
+				String reg2 = instructionBin.substring(12, 16);
+				int reg1Conv = Integer.parseInt(reg1, 2);
+				int reg2Conv = Integer.parseInt(reg1, 2);
+				reg1 = Integer.toString(reg1Conv, 10);
+				reg2 = Integer.toString(reg2Conv, 10);
+				
+				String address = instructionBin.substring(16, 32); //convert address to decimal
+				int addressConv = Integer.parseInt(address, 2);
+				address = Integer.toString(addressConv, 10);
+				
+				switch (opcode)
+				//opcode for 11 can only rd or wr
 				{
-					case "0":
+					case "0": //read
+						if (reg2.equals("0"))
+						{
+							//use the address
+						}
+						else if (!reg2.equals("0"))
+						{
+							//use reg2
+						}
+						else
+						{
+							//error in reading reg2
+							System.out.println("Error in reading instruction: register2 not found.");
+						}
 						break;
-					case "1":
+					case "1": //write
+						
 						break;
 				}
-				//opcode for 11 can only rd or wr
-				//convert next four bits to decimal
-				//convert next for bits to decimal
-				//convert address into decimal
 			}
 			
 			else
