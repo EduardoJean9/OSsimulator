@@ -66,12 +66,44 @@ public class CPU {
 			
 			if (instructionBin.equals("00")) //Arithmetic instruction format
 			{
+				
 				//add, subtract, multiply, divide (based on opcode)
-				//first two bits are not used
+				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
+				int opcodeConv = Integer.parseInt(opcode, 2);
+				opcode = Integer.toString(opcodeConv, 16);
 				//next 6 bits are opcode for (+,-,*,/)
 				//next four bits are the first part of solution (think x)
 				//next four bits are the second part (think y)
 				//next four bits are the answer to the question
+				String reg1 = instructionBin.substring(8, 12); //convert reg 1 and reg 2 to decimal
+				String reg2 = instructionBin.substring(12, 16);
+				String reg3 = instructionBin.substring(16, 20);
+				int reg1Conv = Integer.parseInt(reg1, 2);
+				int reg2Conv = Integer.parseInt(reg2, 2);
+				int reg3Conv = Integer.parseInt(reg3, 2);
+				reg1 = Integer.toString(reg1Conv, 10);
+				reg2 = Integer.toString(reg2Conv, 10);
+				reg3 = Integer.toString(reg3Conv, 10);
+				reg1Conv = Integer.parseInt(reg1);
+				reg2Conv = Integer.parseInt(reg2);
+				reg3Conv = Integer.parseInt(reg3);
+				
+				switch(opcode)
+				{
+					case "5": //add
+						register [reg3Conv-1] = register[reg1Conv-1] + register[reg2Conv-1];
+						break;
+					case "6": //sub
+						register[reg3Conv-1] = register[reg1Conv-1] - register[reg2Conv-1];
+						break;
+					case "7": //mult
+						register[reg3Conv-1] = register[reg1Conv-1] * register[reg2Conv-1];
+						break;
+					case "8": //div
+						register[reg3Conv-1] = register[reg1Conv-1] / register[reg2Conv-1];
+						break;
+				}
+				
 				//example (x+y=z)
 				//last 12 bits are always 0
 			}
@@ -95,7 +127,7 @@ public class CPU {
 				String reg1 = instructionBin.substring(8, 12); //convert reg 1 and reg 2 to decimal
 				String reg2 = instructionBin.substring(12, 16);
 				int reg1Conv = Integer.parseInt(reg1, 2);
-				int reg2Conv = Integer.parseInt(reg1, 2);
+				int reg2Conv = Integer.parseInt(reg2, 2);
 				reg1 = Integer.toString(reg1Conv, 10);
 				reg2 = Integer.toString(reg2Conv, 10);
 				reg1Conv = Integer.parseInt(reg1);
@@ -130,7 +162,7 @@ public class CPU {
 						}
 						else if (!reg2.equals("0"))
 						{
-							
+							register[reg2Conv-1] = reg1Conv;
 						}
 						else
 						{
