@@ -1,8 +1,11 @@
 import java.util.*;
-public class Driver {
 
+public class Driver {
+		
+	public static int IOCount = 0;
 	public static void main(String[] args) 
 	{
+		
 		Scanner scan = new Scanner(System.in);
 		int numPages, pageSize, numCPU, sortingMethod;
 		String temp;
@@ -42,6 +45,8 @@ public class Driver {
 		System.out.println("(2) Priority");
 		System.out.print("Method [1]: ");
 		temp = scan.nextLine();
+		Stopwatch.start();
+		System.out.println("Stopwatch started");
 		if(temp.equals(""))
 		{
 			sortingMethod = 1;
@@ -64,6 +69,7 @@ public class Driver {
 		os.shortTermSchedular();
 		System.out.println("Sorted Ready");
 		os.printPCB();
-		
+		System.out.println("Total IO count: " + IOCount);
+		System.out.println("Total time elapsed:" + Stopwatch.getElapsedTime());
 	}
 }
