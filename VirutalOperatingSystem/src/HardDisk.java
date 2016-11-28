@@ -11,7 +11,8 @@ public class HardDisk
 	public int dataCounter;
 	public ArrayList<PCB> pcbList;
 	public ArrayList<String> hdData;
-
+	public ArrayList<String> inputBuffer;
+	public ArrayList<String> outputBuffer;
 	
 	public HardDisk()
 	{
@@ -49,7 +50,7 @@ public class HardDisk
 					jobPriority = Integer.parseInt(jobHeader[4], 16);
 					programCounter = hdData.size();
 					dataCounter = programCounter+jobSize;
-					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter));
+					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, inputBuffer, outputBuffer));
 					
 				}
 				else if(line.contains("0x")) //Job is either data or instruction code

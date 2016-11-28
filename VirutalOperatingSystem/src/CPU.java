@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 //package operatingSystem;
 
 public class CPU {
@@ -8,14 +10,14 @@ public class CPU {
 	public int jobSize = -1;
 	public int dataCounter = 1;
 	public RAM ram;
-	
+	public ArrayList<String> inputBuffer;
+	public ArrayList<String> outputBuffer;
 	public CPU(RAM i)
 	{
 		ram = i;
 	}
-	//ask about and/or
-	//ask about direct/indirect
 	//ask about time printing (when job is completed)
+	
 	/*
 	 *  Flag Array
 	 *  0. Idle
@@ -40,11 +42,13 @@ public class CPU {
 		this.jobPriority = in.getJobPriority();
 		this.jobSize = in.getJobSize();
 		this.dataCounter = in.getDataCounter();
+		this.inputBuffer = in.getInputBuffer(inputBuffer);
+		this.inputBuffer = in.getOutputBuffer(inputBuffer);
 	}
 	
 	public PCB contextSwitchOut()
 	{
-		PCB out =  new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter);
+		PCB out =  new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, outputBuffer, inputBuffer);
 		return out;
 	}
 	
@@ -97,6 +101,12 @@ public class CPU {
 						break;
 					case "8": //div
 						register[reg3Conv] = register[reg1Conv] / register[reg2Conv];
+						break;
+					case "9": //AND
+						register[reg3Conv] = register[reg1Conv] & register[reg2Conv];
+						break;
+					case "10": //OR
+						register[reg3Conv] = register[reg1Conv] | register[reg2Conv];
 						break;
 				}
 				//and or
@@ -152,14 +162,47 @@ public class CPU {
 						this.jobNumber = addressConv;
 						break;
 					case "11": //MOVI
+						if (reg2Conv == 0) //use data
+						{
+							register[reg1Conv] = addressConv;
+						}
+						else if (reg2Conv != 0)
+						{
+							register[reg1Conv] = reg2Conv;
+						}
 						break;
 					case "12": //ADDI
+						if (reg2Conv == 0) //use data
+						{
+							register[reg1Conv] += addressConv;
+						}
+						else if (reg2Conv != 0)
+						{
+							register[reg1Conv] += reg2Conv;
+						}
 						break;
 					case "13": //MULI
+						if (reg2Conv == 0) //use data
+						{
+							register[reg1Conv] *= addressConv;
+						}
+						else if (reg2Conv != 0)
+						{
+							register[reg1Conv] *= reg2Conv;
+						}
 						break;
 					case "14": //DIVI
+						if (reg2Conv == 0) //use data
+						{
+							register[reg1Conv] /= addressConv;
+						}
+						else if (reg2Conv != 0)
+						{
+							register[reg1Conv] /= reg2Conv;
+						}
 						break;
 					case "15": //LDI
+						
 						break;
 					//effective vs indirect address
 				}
@@ -207,6 +250,7 @@ public class CPU {
 				int addressConv = Integer.parseInt(address, 2);
 				address = Integer.toString(addressConv, 10);
 				addressConv = Integer.parseInt(address);
+				int index = addressConv;
 				
 				switch (opcode)
 				//opcode for 11 can only rd or wr
@@ -214,7 +258,7 @@ public class CPU {
 					case "0": //read
 						if (reg2.equals("0"))
 						{
-							register[reg1Conv] = 0;//temp buffer at address 
+							register[reg1Conv] = Integer.parseInt(inputBuffer.get(index), 16);
 						}
 						else if (!reg2.equals("0"))
 						{
@@ -229,7 +273,7 @@ public class CPU {
 					case "1": //write
 						if (reg2.equals("0"))
 						{
-							 register[addressConv] = 0;//temp buffer at address
+							 register[addressConv] = Integer.parseInt(outputBuffer.get(index), 16);
 						}
 						else if (!reg2.equals("0"))
 						{
