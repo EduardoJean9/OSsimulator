@@ -26,6 +26,7 @@ public class CPU {
 	 *  3. send to ready queue
 	 *  4. Interrupt
 	 */
+	
 	boolean stateArray[] = {true, false, false, false, false};
 	
 	/*
@@ -233,6 +234,7 @@ public class CPU {
 			{
 				Driver.IOCount++;
 				System.out.println("Total IO count: " + Driver.IOCount);
+				System.out.println("Total time elapsed after " + Driver.IOCount + "IO intructions: " + Stopwatch.getElapsedTime());
 				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
 				int opcodeConv = Integer.parseInt(opcode, 2);
 				opcode = Integer.toString(opcodeConv, 16);
