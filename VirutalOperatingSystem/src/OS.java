@@ -45,6 +45,7 @@ public class OS {
 		{
 			//1- FCFS
 			//2- Priority
+			//3- SJF
 			
 			if(sortingMethod == 1)
 			{
@@ -64,6 +65,21 @@ public class OS {
 		            }
 		        }
 		    }
+			
+			else if (sortingMethod == 3)
+			{
+				PCB temp;
+		        for(int i=0; i < ready.size()-1; i++){
+		 
+		            for(int j=1; j < ready.size()-i; j++){
+		                if(ready.get(j-1).getJobSize() > ready.get(j).getJobSize()){
+		                    temp=ready.get(j-1);
+		                    ready.set((j-1), ready.get(j));
+		                    ready.set(j, temp);
+		                }
+		            }
+		        }
+			}
 		}
 		
 		public void Dispatcher()

@@ -43,6 +43,7 @@ public class Driver {
 		System.out.println("Sorting Method");
 		System.out.println("(1) FCFS");
 		System.out.println("(2) Priority");
+		System.out.println("(3) Shortest Job First");
 		System.out.print("Method [1]: ");
 		temp = scan.nextLine();
 		Stopwatch.start();

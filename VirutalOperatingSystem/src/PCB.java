@@ -112,7 +112,7 @@ public class PCB {
 
 	public String toString()
 	{
-		return ("job number: " + jobNumber + " Program Counter: " + programCounter + " priority: " + jobPriority);
+		return ("job number: " + jobNumber + " Program Counter: " + programCounter + " priority: " + jobPriority + " job size: " + jobSize);
 	}
 	
 }
