@@ -51,17 +51,27 @@ public class Driver {
 						}
 						avgWait = avgWait/30;
 						
-						fout.write(numPages +"-" + pageSize + "-" + numCPU + "-" +sortingMethod + "," + (Stopwatch.getElapsedTimeSecs()/100000) + "," + (avgWait/100000));
+						fout.write(numPages +"-" + pageSize + "-" + numCPU + "-" +sortingMethod + "," + (Stopwatch.getElapsedTimeSecs()) + "," + (avgWait/100000));
 						fout.newLine();
+						String sort = "";
+						if (sortingMethod == 1)
+							sort = "FCFS";
+						else if (sortingMethod == 2)
+							sort = "priority";
+						else
+							sort = "SJF";
 
 						System.out.println();
 						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("Terminate Queue Size: " + os.terminated.size());
-						System.out.println("Total IO count: " + IOCount);
-						System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " microseconds");
-						System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + "micoseconds" );
-						
 						System.out.println("Number of CPUs: " + numCPU);
+						System.out.println("Number of Pages: " + numPages);
+						System.out.println("Page Size: " + pageSize);
+						System.out.println("Sorting Method Used: " + sort);
+						System.out.println("Total IO count: " + IOCount);
+						System.out.println("Terminate Queue Size: " + os.terminated.size());
+						System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
+						System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
+						System.out.println("Average waiting Time: " + avgWait/1000 + " microseconds");
 						System.out.println("-------------------------------------------------------------------------------");
 						
 
