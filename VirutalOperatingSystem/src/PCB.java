@@ -29,6 +29,7 @@ public class PCB {
 	public long startTime;
 	public long createdTime;
 	public long dispatchTime;
+	public long waitTime;
 	public ArrayList<String> inputBuffer;
 	public ArrayList<String> outputBuffer;
 	
@@ -43,12 +44,13 @@ public class PCB {
 		startTime = 0;
 		createdTime = 0;
 		dispatchTime = 0;
+		waitTime = 0;
 		ArrayList<String> inputBuffer = new ArrayList<String>();
 		ArrayList<String> outputBuffer = new ArrayList<String>();
 	}
 	
 	PCB(int jobNumber, int jobSize, int jobPriority, int programCounter, int dataCounter, 
-			ArrayList<String> inputBuffer, ArrayList<String> outputBuffer, long jobTime, long startTime, long createdTime, long dispatchTime)
+			ArrayList<String> inputBuffer, ArrayList<String> outputBuffer, long jobTime, long startTime, long createdTime, long dispatchTime, long waitTime)
 	{
 		this.jobNumber = jobNumber;
 		this.jobSize = jobSize;
@@ -61,8 +63,17 @@ public class PCB {
 		this.startTime = startTime;
 		this.createdTime = createdTime;
 		this.dispatchTime = dispatchTime;
+		this.waitTime = waitTime;
 	}
 	
+	public long getWaitTime() {
+		return waitTime;
+	}
+
+	public void setWaitTime(long waitTime) {
+		this.waitTime = waitTime;
+	}
+
 	public long getCreatedTime() {
 		return createdTime;
 	}

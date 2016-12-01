@@ -14,6 +14,7 @@ public class CPU extends Thread{
 	public long endTime = 0;
 	public long createdTime = 0;
 	public long dispatchTime = 0;
+	public long waitTime = 0;
 	public RAM ram;
 	public ArrayList<String> inputBuffer;
 	public ArrayList<String> outputBuffer;
@@ -53,13 +54,13 @@ public class CPU extends Thread{
 		this.createdTime = in.getCreatedTime();
 		if (startTime == 0)
 			this.startTime = System.nanoTime();
-		if (dispatchTime != 0)
+		if (dispatchTime == 0)
 			this.dispatchTime = System.nanoTime();
 	}
 	
 	public PCB contextSwitchOut()
 	{
-		PCB out =  new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, outputBuffer, inputBuffer, jobTime, startTime, createdTime, dispatchTime);
+		PCB out =  new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, outputBuffer, inputBuffer, jobTime, startTime, createdTime, dispatchTime, waitTime);
 		stateArray[0] = true;
 		stateArray[1] = false;
 		stateArray[2] = false;

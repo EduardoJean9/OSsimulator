@@ -74,7 +74,7 @@ public class OS {
 		        }
 		    }
 			
-			else if (sortingMethod == 3)
+			else 
 			{
 				PCB temp;
 		        for(int i=0; i < ready.size()-1; i++){
