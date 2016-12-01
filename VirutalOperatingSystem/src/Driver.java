@@ -17,17 +17,17 @@ public class Driver {
 		BufferedWriter fout = new BufferedWriter(fw);	
 		fout.write("# of Pages,Page Size,# of CPU,Sorting Method,Total Execution Time(Mili),Average wait time(Mili)");
 		fout.newLine();
-		//for(int i = 4; i<=16; i*=2){ //num pages
+		for(int i = 4; i<=16; i*=2){ //num pages
 			for(int j = 8; j<=32; j*=2){ //page size
-			//	for(int k = 1; k<=4; k*=2){ // num cpu
-				//	for(int l = 1; l<=3; l++){ //sorting method
+				for(int k = 1; k<=20; k++){ // num cpu
+					for(int l = 1; l<=3; l++){ //sorting method
 						Stopwatch.start();
 						int numPages, pageSize, numCPU, sortingMethod;
 						
-						sortingMethod = 3;
-						numCPU = 4;
+						sortingMethod = l;
+						numCPU = k;
 						pageSize = j;
-						numPages = 16;
+						numPages = i;
 						
 						OS os = new OS(numPages, pageSize, numCPU, sortingMethod);
 						
@@ -76,9 +76,9 @@ public class Driver {
 						
 
 					}
-			//	}
-		//	}
-	//	}
+				}
+			}
+		}
 		fout.flush();
 		fout.close();		
 		}
@@ -125,8 +125,9 @@ public class Driver {
 		System.out.println("(3) Shortest Job First");
 		System.out.print("Method [1]: ");
 		temp = scan.nextLine();
-		Stopwatch.start();
 		System.out.println("Stopwatch started");
+		Stopwatch.start();
+		
 		if(temp.equals(""))
 		{
 			sortingMethod = 1;
