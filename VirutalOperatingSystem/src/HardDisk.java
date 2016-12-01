@@ -13,8 +13,7 @@ public class HardDisk
 	public long startTime;
 	public ArrayList<PCB> pcbList;
 	public ArrayList<String> hdData;
-//	public ArrayList<String> inputBuffer = new ArrayList<String>();
-//	public ArrayList<String> outputBuffer = new ArrayList<String>();
+
 	
 	public HardDisk()
 	{

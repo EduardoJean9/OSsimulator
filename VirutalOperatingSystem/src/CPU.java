@@ -83,16 +83,6 @@ public class CPU extends Thread{
 		stateArray[0] = false;
 		while (!stateArray[4])
 		{
-//			if(jobNumber == 2 && programCounter == 20){
-//				int i = 0;
-//			}
-//			try {
-//				Thread.sleep(50);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			System.out.println("Job #: " + jobNumber + " PC: " + programCounter);
 			String instruction = ram.getRAM(jobNumber, programCounter);
 			String instructionBin = hexToBinary(instruction);
 			String format = instructionBin.substring(0, Math.min(instructionBin.length(), 2));
@@ -267,8 +257,6 @@ public class CPU extends Thread{
 			else if (format.equals("11")) //Input and Output instruction format
 			{
 				Driver.IOCount++;
-//				System.out.println("Total IO count: " + (Driver.IOCount));
-				//System.out.println(instructionBin);
 				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
 				int opcodeConv = Integer.parseInt(opcode, 2);
 				opcode = Integer.toString(opcodeConv, 16);
@@ -295,7 +283,6 @@ public class CPU extends Thread{
 						if (reg2.equals("0"))
 						{
 							String buff = inputBuffer.remove(0);
-//							System.out.println("DEBUG- Line 276: " + buff);
 							int result = Integer.parseInt(buff, 16);
 							register[reg1Conv] = result;
 						}
@@ -334,9 +321,7 @@ public class CPU extends Thread{
 			programCounter++;
 			if (programCounter >= jobSize-1)
 			{
-//				endTime = System.nanoTime();
-//				this.jobTime = ((endTime - this.startTime) / 1000000);
-//				System.out.println("Job " + this.jobNumber + " Finished in " + this.jobTime + " milliseconds");
+				//set flags to true
 				stateArray[2] = true;
 				stateArray[0] = true;
 				stateArray[4] = true;

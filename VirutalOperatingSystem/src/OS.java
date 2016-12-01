@@ -4,7 +4,6 @@ public class OS {
 		HardDisk hd;
 		RAM r;
 		ArrayList<PCB> ready;
-//		ArrayList<PCB> waiting;
 		ArrayList<PCB> terminated;
 		CPU[] cpu;
 		int sortingMethod;
