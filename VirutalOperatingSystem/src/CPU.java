@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class CPU extends Thread{
 	
+	public int id = -1;
 	public int jobNumber = -1;
 	public int programCounter = -1;
 	public int jobPriority = -1;
@@ -18,9 +19,10 @@ public class CPU extends Thread{
 	public RAM ram;
 	public ArrayList<String> inputBuffer;
 	public ArrayList<String> outputBuffer;
-	public CPU(RAM i)
+	public CPU(RAM i, int j)
 	{
 		ram = i;
+		id = j;
 	}
 	//ask about time printing (when job is completed)
 	
@@ -66,6 +68,7 @@ public class CPU extends Thread{
 		stateArray[2] = false;
 		stateArray[3] = false;
 		stateArray[4] = false;
+		out.cpuNum = this.id;
 		return out;
 	}
 	

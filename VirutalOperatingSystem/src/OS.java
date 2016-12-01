@@ -99,7 +99,7 @@ public class OS {
 				{
 					if(ready.size() > 0)
 					{
-						cpu[i] = new CPU(r);
+						cpu[i] = new CPU(r,i);
 						cpu[i].contextSwitchIn(ready.get(0)); //push in a new process
 						ready.remove(0);
 						cpu[i].start();
@@ -114,7 +114,7 @@ public class OS {
 						terminated.add(temp);
 						if(ready.size() > 0)
 						{
-							cpu[i] = new CPU(r);
+							cpu[i] = new CPU(r,i);
 							cpu[i].contextSwitchIn(ready.get(0)); //push in a new process
 							ready.remove(0);
 							cpu[i].start();
@@ -124,7 +124,7 @@ public class OS {
 					{
 						if(ready.size() > 0)
 						{
-							cpu[i] = new CPU(r);
+							cpu[i] = new CPU(r,i);
 							cpu[i].contextSwitchIn(ready.get(0)); //push in a new process
 							ready.remove(0);
 							cpu[i].start();

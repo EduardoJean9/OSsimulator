@@ -60,6 +60,11 @@ public class Driver {
 							sort = "priority";
 						else
 							sort = "SJF";
+						long[] idleTimes = new long[numCPU];
+						for (PCB t : os.terminated)
+						{
+							idleTimes[t.cpuNum] += t.jobTime;
+						}
 
 						System.out.println();
 						System.out.println("-------------------------------------------------------------------------------");
@@ -72,6 +77,11 @@ public class Driver {
 						System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
 						System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
 						System.out.println("Average waiting Time: " + avgWait/1000 + " microseconds");
+						for (int z = 0; z < idleTimes.length; z++)
+						{
+							idleTimes[z] = (Stopwatch.getElapsedTime()) - idleTimes[z];
+							System.out.println("CPU Number: " + z + " was idle for " + idleTimes[z]/1000000 + " milliseconds");
+						}
 						System.out.println("-------------------------------------------------------------------------------");
 						
 
@@ -152,7 +162,7 @@ public class Driver {
 		os.longTermSchedular();
 		os.shortTermSchedular();		
 		os.Dispatcher();
-		
+		Stopwatch.stop();
 		FileWriter fw = new FileWriter("Results.csv");
 		BufferedWriter fout = new BufferedWriter(fw);
 		fout.write("System Paramiters");
@@ -186,10 +196,17 @@ public class Driver {
 		}
 		
 		long avgWait = 0;
+		long totalJobTime = 0;
 		for(PCB t : os.terminated){
 			avgWait += t.dispatchTime - t.createdTime;
 		}
 		avgWait = avgWait/30;
+		
+		for(PCB t : os.terminated){
+			totalJobTime += t.jobTime;
+		}
+		
+		
 		
 		String sort = "";
 		if (sortingMethod == 1)
@@ -198,6 +215,14 @@ public class Driver {
 			sort = "priority";
 		else
 			sort = "SJF";
+		
+		
+		long[] idleTimes = new long[numCPU];
+		for (PCB t : os.terminated)
+		{
+			idleTimes[t.cpuNum] += t.jobTime;
+		}
+		
 		
 		System.out.println();
 		System.out.println("-------------------------------------------------------------------------------");
@@ -210,6 +235,12 @@ public class Driver {
 		System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
 		System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
 		System.out.println("Average waiting Time: " + avgWait/1000 + " microseconds");
+		System.out.println("Total Job Time : " + totalJobTime/1000000 + " milliseconds");
+		for (int z = 0; z < idleTimes.length; z++)
+		{
+			idleTimes[z] = (Stopwatch.getElapsedTime()) - idleTimes[z];
+			System.out.println("CPU Number: " + z + " was idle for " + idleTimes[z]/1000000 + " milliseconds");
+		}
 		System.out.println("-------------------------------------------------------------------------------");
 		
 		fout.flush();

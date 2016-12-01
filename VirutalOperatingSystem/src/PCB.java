@@ -11,11 +11,13 @@ public class PCB {
 	public long createdTime;
 	public long dispatchTime;
 	public long waitTime;
+	public int cpuNum;
 	public ArrayList<String> inputBuffer;
 	public ArrayList<String> outputBuffer;
 	
 	PCB()
 	{
+		cpuNum = -1;
 		jobNumber = -1;
 		programCounter = -1;
 		jobPriority = -1;
