@@ -1,4 +1,4 @@
 # of Pages,Page Size,# of CPU,Sorting Method,Total Execution Time(Mili),Average wait time(Mili)
-16-16-4-1,864,137
-16-16-4-2,847,138
-16-16-4-3,824,136
+16-8-4-3,1352,36
+16-16-4-3,848,138
+16-32-4-3,814,1746

@@ -17,17 +17,17 @@ public class Driver {
 		BufferedWriter fout = new BufferedWriter(fw);	
 		fout.write("# of Pages,Page Size,# of CPU,Sorting Method,Total Execution Time(Mili),Average wait time(Mili)");
 		fout.newLine();
-		for(int i = 4; i<=16; i*=2){ //num pages
-			for(int j = 16; j<=32; j*=2){ //page size
-				for(int k = 1; k<=4; k*=2){ // num cpu
-					for(int l = 1; l<=3; l++){ //sorting method
+		//for(int i = 4; i<=16; i*=2){ //num pages
+			for(int j = 8; j<=32; j*=2){ //page size
+			//	for(int k = 1; k<=4; k*=2){ // num cpu
+				//	for(int l = 1; l<=3; l++){ //sorting method
 						Stopwatch.start();
 						int numPages, pageSize, numCPU, sortingMethod;
 						
-						sortingMethod = l;
-						numCPU = k;
+						sortingMethod = 3;
+						numCPU = 4;
 						pageSize = j;
-						numPages = i;
+						numPages = 16;
 						
 						OS os = new OS(numPages, pageSize, numCPU, sortingMethod);
 						
@@ -76,9 +76,9 @@ public class Driver {
 						
 
 					}
-				}
-			}
-		}
+			//	}
+		//	}
+	//	}
 		fout.flush();
 		fout.close();		
 		}
