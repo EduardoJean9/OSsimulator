@@ -4,7 +4,7 @@ public class OS {
 		HardDisk hd;
 		RAM r;
 		ArrayList<PCB> ready;
-		ArrayList<PCB> waiting;
+//		ArrayList<PCB> waiting;
 		ArrayList<PCB> terminated;
 		CPU[] cpu;
 		int sortingMethod;
@@ -15,10 +15,10 @@ public class OS {
 			hd.input();
 			r = new RAM(numpages, pagesize, hd);
 			ready = new ArrayList<PCB>();
-			waiting = new ArrayList<PCB>();
 			terminated = new ArrayList<PCB>();
 			cpu = new CPU[numCPU];
 			this.sortingMethod = sortingMethod;
+
 		}
 		
 		public void longTermSchedular()
@@ -32,6 +32,7 @@ public class OS {
 				else if (r.canFit(hd.pcbList.get(0)))
 				{
 					PCB job = hd.pcbList.remove(0);
+					job.setCreatedTime(System.nanoTime());
 					r.Load(job);
 					ready.add(job);
 				}
@@ -39,6 +40,13 @@ public class OS {
 					break;
 			}
 			
+		}
+		
+		public boolean isDone(){
+			if(hd.pcbList.size() == 0)
+				return true;
+			else
+				return false;
 		}
 		
 		public void shortTermSchedular()
@@ -51,7 +59,7 @@ public class OS {
 			{
 				return;
 			}
-			else if (sortingMethod == 2)
+			else if (sortingMethod == 2) //priority
 			{
 				PCB temp;
 		        for(int i=0; i < ready.size()-1; i++){
@@ -82,10 +90,50 @@ public class OS {
 			}
 		}
 		
+		
 		public void Dispatcher()
 		{
 			
-		}
+			for(int i = 0; i < cpu.length; i++)
+			{				
+				if (cpu[i] == null) //if not declared
+				{
+					if(ready.size() > 0)
+					{
+						cpu[i] = new CPU(r);
+						cpu[i].contextSwitchIn(ready.get(0)); //push in a new process
+						ready.remove(0);
+						cpu[i].start();
+					}
+				}
+				else if(cpu[i].stateArray[0]) //if idle
+				{
+					if(cpu[i].stateArray[2]) //if terminate
+					{
+						PCB temp = cpu[i].contextSwitchOut();
+						r.Deallocate(temp);
+						terminated.add(temp);
+						if(ready.size() > 0)
+						{
+							cpu[i] = new CPU(r);
+							cpu[i].contextSwitchIn(ready.get(0)); //push in a new process
+							ready.remove(0);
+							cpu[i].start();
+						}
+					}
+					else
+					{
+						if(ready.size() > 0)
+						{
+							cpu[i] = new CPU(r);
+							cpu[i].contextSwitchIn(ready.get(0)); //push in a new process
+							ready.remove(0);
+							cpu[i].start();
+						}
+					}
+				}
+			}//for(int i...
+		}//Dispatcher
 
 		public void printPCB()
 		{
@@ -100,4 +148,5 @@ public class OS {
 			return "# Pages: " + r.numpages + " Page Size: " + r.pagesize + "\n"
 					+ "# of CPUs: " + cpu.length + " Sorting Method: " + sortingMethod;
 		}
-}
+		}
+		

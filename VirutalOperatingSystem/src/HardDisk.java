@@ -9,10 +9,12 @@ public class HardDisk
 	public int jobPriority;
 	public int jobSize;
 	public int dataCounter;
+	public long jobTime;
+	public long startTime;
 	public ArrayList<PCB> pcbList;
 	public ArrayList<String> hdData;
-	public ArrayList<String> inputBuffer;
-	public ArrayList<String> outputBuffer;
+//	public ArrayList<String> inputBuffer = new ArrayList<String>();
+//	public ArrayList<String> outputBuffer = new ArrayList<String>();
 	
 	public HardDisk()
 	{
@@ -37,6 +39,8 @@ public class HardDisk
 		{
 			FileReader filereader = new FileReader(filename);
 			BufferedReader bufferedReader = new BufferedReader(filereader);
+			boolean data = false;
+			ArrayList<String> jobData = null;
 			while((line = bufferedReader.readLine()) != null)
 			{
 				stringbuf.append(line).append("\n");
@@ -44,22 +48,33 @@ public class HardDisk
 				if (line.contains("JOB")) //is job header
 				{
 					// JOB 1 17 2
+					data = false;
+					jobData = new ArrayList<String>();
 					String jobHeader[] = line.split(" ");
 					jobNumber = Integer.parseInt(jobHeader[2], 16);
 					jobSize = Integer.parseInt(jobHeader[3], 16);
 					jobPriority = Integer.parseInt(jobHeader[4], 16);
-					programCounter = hdData.size();
+					programCounter = 0;//hdData.size();
 					dataCounter = programCounter+jobSize;
-					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, inputBuffer, outputBuffer));
-					
+					pcbList.add(new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, jobTime, startTime));
 				}
 				else if(line.contains("0x")) //Job is either data or instruction code
 				{
 					String[] job = line.split("0x");
 					hdData.add(job[1]);
+					if(data){
+						jobData.add(job[1]);
+					}
+					else{
+						//ignore		
+					}
 				}
-				else; //process is a //DATA or //END
-				
+				else if(line.contains("Data")){
+					data = true;
+				}
+				else if(line.contains("END")){
+					pcbList.get(pcbList.size()-1).setInputBuffer(jobData);
+				}
 			}
 			//print out each job header
 //			for (PCB t : pcbList)

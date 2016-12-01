@@ -2,13 +2,18 @@ import java.util.ArrayList;
 
 //package operatingSystem;
 
-public class CPU {
+public class CPU extends Thread{
 	
 	public int jobNumber = -1;
 	public int programCounter = -1;
 	public int jobPriority = -1;
 	public int jobSize = -1;
 	public int dataCounter = 1;
+	public long jobTime = 0;
+	public long startTime = 0;
+	public long endTime = 0;
+	public long createdTime = 0;
+	public long dispatchTime = 0;
 	public RAM ram;
 	public ArrayList<String> inputBuffer;
 	public ArrayList<String> outputBuffer;
@@ -37,18 +42,29 @@ public class CPU {
 	
 	public void contextSwitchIn(PCB in)
 	{
-		this.jobNumber = in.getJobNumber();;
-		this.programCounter = in.getProgramCounter();;
+		this.jobNumber = in.getJobNumber();
+		this.programCounter = in.getProgramCounter();
 		this.jobPriority = in.getJobPriority();
 		this.jobSize = in.getJobSize();
 		this.dataCounter = in.getDataCounter();
-		this.inputBuffer = in.getInputBuffer(inputBuffer);
-		this.inputBuffer = in.getOutputBuffer(inputBuffer);
+		this.inputBuffer = in.getInputBuffer();
+		this.outputBuffer = in.getOutputBuffer();
+		this.startTime = in.getStartTime();
+		this.createdTime = in.getCreatedTime();
+		if (startTime == 0)
+			this.startTime = System.nanoTime();
+		if (dispatchTime != 0)
+			this.dispatchTime = System.nanoTime();
 	}
 	
 	public PCB contextSwitchOut()
 	{
-		PCB out =  new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, outputBuffer, inputBuffer);
+		PCB out =  new PCB(jobNumber, jobSize, jobPriority, programCounter, dataCounter, outputBuffer, inputBuffer, jobTime, startTime, createdTime, dispatchTime);
+		stateArray[0] = true;
+		stateArray[1] = false;
+		stateArray[2] = false;
+		stateArray[3] = false;
+		stateArray[4] = false;
 		return out;
 	}
 	
@@ -66,11 +82,21 @@ public class CPU {
 		stateArray[0] = false;
 		while (!stateArray[4])
 		{
+//			if(jobNumber == 2 && programCounter == 20){
+//				int i = 0;
+//			}
+//			try {
+//				Thread.sleep(50);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			System.out.println("Job #: " + jobNumber + " PC: " + programCounter);
 			String instruction = ram.getRAM(jobNumber, programCounter);
-			String format = hexToBinary(instruction);
-			String instructionBin = format.substring(0, Math.min(format.length(), 2));
+			String instructionBin = hexToBinary(instruction);
+			String format = instructionBin.substring(0, Math.min(instructionBin.length(), 2));
 			
-			if (instructionBin.equals("00")) //Arithmetic instruction format
+			if (format.equals("00")) //Arithmetic instruction format
 			{
 				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
 				int opcodeConv = Integer.parseInt(opcode, 2);
@@ -112,7 +138,7 @@ public class CPU {
 				//and or
 			}
 			
-			else if (instructionBin.equals("01")) //Conditional Branch and Immediate format
+			else if (format.equals("01")) //Conditional Branch and Immediate format
 			{
 				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
 				int opcodeConv = Integer.parseInt(opcode, 2);
@@ -202,13 +228,20 @@ public class CPU {
 						}
 						break;
 					case "15": //LDI
-						//registers[reg1conv] = addressConv;
+						if (reg2Conv == 0) //use data
+						{
+							register[reg1Conv] = addressConv;
+						}
+						else if (reg2Conv != 0)
+						{
+							register[reg1Conv] = reg2Conv;
+						}
 						break;
 					//effective vs indirect address
 				}
 			}
 			
-			else if (instructionBin.equals("10")) //Unconditional Jump format
+			else if (format.equals("10")) //Unconditional Jump format
 			{
 				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
 				int opcodeConv = Integer.parseInt(opcode, 2);
@@ -224,15 +257,17 @@ public class CPU {
 				{
 					stateArray[4] = true;
 					stateArray[0] = true;
+					stateArray[2] = true;
 				}
 				else
 					System.out.println("Error in reading opcode for unonditional jump.");
 			}
 			
-			else if (instructionBin.equals("11")) //Input and Output instruction format
+			else if (format.equals("11")) //Input and Output instruction format
 			{
 				Driver.IOCount++;
-				System.out.println("Total IO count: " + Driver.IOCount);
+//				System.out.println("Total IO count: " + (Driver.IOCount));
+				//System.out.println(instructionBin);
 				String opcode = instructionBin.substring(2, 8); //convert opcode to hex
 				int opcodeConv = Integer.parseInt(opcode, 2);
 				opcode = Integer.toString(opcodeConv, 16);
@@ -258,7 +293,10 @@ public class CPU {
 					case "0": //read
 						if (reg2.equals("0"))
 						{
-							register[reg1Conv] = Integer.parseInt(inputBuffer.get(index), 16);
+							String buff = inputBuffer.remove(0);
+//							System.out.println("DEBUG- Line 276: " + buff);
+							int result = Integer.parseInt(buff, 16);
+							register[reg1Conv] = result;
 						}
 						else if (!reg2.equals("0"))
 						{
@@ -273,11 +311,11 @@ public class CPU {
 					case "1": //write
 						if (reg2.equals("0"))
 						{
-							 register[addressConv] = Integer.parseInt(outputBuffer.get(index), 16);
+							outputBuffer.add(register[reg1Conv] + "");
 						}
 						else if (!reg2.equals("0"))
 						{
-							register[reg2Conv] = register[reg1Conv];
+							register[reg1Conv] = register[reg2Conv];
 						}
 						else
 						{
@@ -293,10 +331,18 @@ public class CPU {
 				System.out.println("Error in decoding. First two bits of instruction are: " +  instructionBin);
 			
 			programCounter++;
-			if (programCounter >= jobSize)
+			if (programCounter >= jobSize-1)
 			{
-				stateArray[5] = true;
+//				endTime = System.nanoTime();
+//				this.jobTime = ((endTime - this.startTime) / 1000000);
+//				System.out.println("Job " + this.jobNumber + " Finished in " + this.jobTime + " milliseconds");
+				stateArray[2] = true;
+				stateArray[0] = true;
+				stateArray[4] = true;
 			}
 		}
+		endTime = System.nanoTime();
+		this.jobTime = ((endTime - this.startTime));
+		System.out.println("Job " + this.jobNumber + " Finished in " + this.jobTime + " nanoseconds");
 	}
 }
