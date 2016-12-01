@@ -51,8 +51,8 @@ public class Driver {
 						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Terminate Queue Size: " + os.terminated.size());
 						System.out.println("Total IO count: " + IOCount);
-						System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " nanoseconds");
-						System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " nanoseconds" );
+						System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " microseconds");
+						System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + "micoseconds" );
 						
 						System.out.println("Number of CPUs: " + numCPU);
 						System.out.println("-------------------------------------------------------------------------------");
