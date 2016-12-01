@@ -154,19 +154,19 @@ public class Driver {
 		fout.newLine();
 		fout.write("Total IO count: " + IOCount);
 		fout.newLine();
-		fout.write("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " nanoseconds");
+		fout.write("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
 		fout.newLine();
-		fout.write("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " nanoseconds" );
+		fout.write("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
 		fout.newLine();
 	
-		fout.write("Job #,Job Time");
+		fout.write("Job #,Job Time (Nanoseconds)");
 		fout.newLine();
 		for(PCB t : os.terminated){
 			fout.write(t.jobNumber + "," + t.jobTime);
 			fout.newLine();
 		}
 		
-		fout.write("Job #,Wait Time");
+		fout.write("Job #,Wait Time (NanoSeconds)");
 		fout.newLine();
 		for(PCB t : os.terminated){
 			long time = t.dispatchTime - t.createdTime;
