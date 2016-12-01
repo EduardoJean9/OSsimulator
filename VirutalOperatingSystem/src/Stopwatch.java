@@ -46,9 +46,9 @@ public class Stopwatch {
 	public static long getElapsedTimeSecs() {
 		long elapsed;
 		if (running) {
-			elapsed = ((System.nanoTime() - startTime));
+			elapsed = ((System.nanoTime() - startTime)/1000000);
 		} else {
-			elapsed = ((stopTime - startTime));
+			elapsed = ((stopTime - startTime)/1000000);
 		}
 		return elapsed;
 	}
@@ -56,9 +56,9 @@ public class Stopwatch {
 	public long getJobTimeMil() {
 		long elapsed;
 		if (running) {
-			elapsed = ((System.nanoTime() - startTime));
+			elapsed = ((System.nanoTime() - startTime)/1000000);
 		} else {
-			elapsed = ((stopTime - startTime));
+			elapsed = ((stopTime - startTime)/1000000);
 		}
 		return elapsed;
 	}

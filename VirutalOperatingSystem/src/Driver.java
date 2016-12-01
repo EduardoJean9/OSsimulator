@@ -17,10 +17,10 @@ public class Driver {
 		BufferedWriter fout = new BufferedWriter(fw);	
 		fout.write("# of Pages,Page Size,# of CPU,Sorting Method,Total Execution Time(Mili),Average wait time(Mili)");
 		fout.newLine();
-		for(int i = 4; i<=16; i*=2){
-			for(int j = 16; j<=32; j*=2){
-				for(int k = 1; k<=4; k*=2){
-					for(int l = 1; l<=3; l++){
+		for(int i = 4; i<=16; i*=2){ //num pages
+			for(int j = 16; j<=32; j*=2){ //page size
+				for(int k = 1; k<=4; k*=2){ // num cpu
+					for(int l = 1; l<=3; l++){ //sorting method
 						Stopwatch.start();
 						int numPages, pageSize, numCPU, sortingMethod;
 						
@@ -196,9 +196,9 @@ public class Driver {
 		System.out.println("Sorting Method Used: " + sort);
 		System.out.println("Total IO count: " + IOCount);
 		System.out.println("Terminate Queue Size: " + os.terminated.size());
-		System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " nanoseconds");
-		System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " nanoseconds" );
-		System.out.println("Average waiting Time: " + avgWait*1 + " nanoseconds");
+		System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
+		System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
+		System.out.println("Average waiting Time: " + avgWait/1000 + " microseconds");
 		System.out.println("-------------------------------------------------------------------------------");
 		
 		fout.flush();
