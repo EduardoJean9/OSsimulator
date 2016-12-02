@@ -15,15 +15,15 @@ public class Driver {
 		
 		FileWriter fw = new FileWriter("Graph Data.csv");
 		BufferedWriter fout = new BufferedWriter(fw);	
-		fout.write("# of Pages,Page Size,# of CPU,Sorting Method,Total Execution Time(Mili),Average wait time(Mili)");
+		fout.write("# of Pages,Page Size,# of CPU,Sorting Method,Total Execution Time(Mili),Average wait time(Mili),");
 		fout.newLine();
 		for(int i = 4; i<=16; i*=2){ //num pages
-			for(int j = 8; j<=32; j*=2){ //page size
-				for(int k = 1; k<=20; k++){ // num cpu
+			for(int j = 8; j<=16; j*=2){ //page size
+				for(int k = 1; k<=4; k*=2){ // num cpu
 					for(int l = 1; l<=3; l++){ //sorting method
 						Stopwatch.start();
 						int numPages, pageSize, numCPU, sortingMethod;
-						
+			
 						sortingMethod = l;
 						numCPU = k;
 						pageSize = j;
@@ -51,7 +51,7 @@ public class Driver {
 						}
 						avgWait = avgWait/30;
 						
-						fout.write(numPages +"-" + pageSize + "-" + numCPU + "-" +sortingMethod + "," + (Stopwatch.getElapsedTimeSecs()) + "," + (avgWait/100000));
+						fout.write(numPages +"_" + pageSize + "_" + numCPU + "_" +sortingMethod + "," + (Stopwatch.getElapsedTimeSecs()) + "," + (avgWait/100000));
 						fout.newLine();
 						String sort = "";
 						if (sortingMethod == 1)
@@ -65,24 +65,29 @@ public class Driver {
 						{
 							idleTimes[t.cpuNum] += t.jobTime;
 						}
+						long totalJobTime = 0;
+						for(PCB t : os.terminated){
+							totalJobTime += t.jobTime;
+						}
 
 						System.out.println();
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("Number of CPUs: " + numCPU);
-						System.out.println("Number of Pages: " + numPages);
-						System.out.println("Page Size: " + pageSize);
-						System.out.println("Sorting Method Used: " + sort);
-						System.out.println("Total IO count: " + IOCount);
-						System.out.println("Terminate Queue Size: " + os.terminated.size());
-						System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
-						System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
-						System.out.println("Average waiting Time: " + avgWait/1000 + " microseconds");
+						System.out.println("_______________________________________________________________________________");
+						System.out.println(String.format("%-40s %s" ,"Number of CPUs:", numCPU));
+						System.out.println(String.format("%-40s %s" , "Number of Pages:",numPages));
+						System.out.println(String.format("%-40s %s" ,"Page Size: ",pageSize));
+						System.out.println(String.format("%-40s %s" ,"Sorting Method Used: ",sort));
+						System.out.println(String.format("%-40s %s" ,"Total IO count: ",IOCount));
+						System.out.println(String.format("%-40s %s" ,"Terminate Queue Size: ",os.terminated.size()));
+						System.out.println(String.format("%-40s %s" ,"Total time elapsed: ",Stopwatch.getElapsedTimeSecs() + " milliseconds"));
+						System.out.println(String.format("%-40s %s" ,"Average job time: ",((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" ));
+						System.out.println(String.format("%-40s %s" ,"Average waiting Time: ",avgWait/1000 + " microseconds"));
+						System.out.println(String.format("%-40s %s" ,"Total Job Time : ",totalJobTime/1000000 + " milliseconds"));
 						for (int z = 0; z < idleTimes.length; z++)
 						{
 							idleTimes[z] = (Stopwatch.getElapsedTime()) - idleTimes[z];
-							System.out.println("CPU Number: " + z + " was idle for " + idleTimes[z]/1000000 + " milliseconds");
+							System.out.println(String.format("%-40s %s" ,"CPU " + z + " was idle for: ",idleTimes[z]/1000000 + " milliseconds"));
 						}
-						System.out.println("-------------------------------------------------------------------------------");
+						System.out.println("_______________________________________________________________________________");
 						
 
 					}
@@ -225,23 +230,23 @@ public class Driver {
 		
 		
 		System.out.println();
-		System.out.println("-------------------------------------------------------------------------------");
-		System.out.println("Number of CPUs: " + numCPU);
-		System.out.println("Number of Pages: " + numPages);
-		System.out.println("Page Size: " + pageSize);
-		System.out.println("Sorting Method Used: " + sort);
-		System.out.println("Total IO count: " + IOCount);
-		System.out.println("Terminate Queue Size: " + os.terminated.size());
-		System.out.println("Total time elapsed: " + Stopwatch.getElapsedTimeSecs() + " milliseconds");
-		System.out.println("Average job time: " + ((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" );
-		System.out.println("Average waiting Time: " + avgWait/1000 + " microseconds");
-		System.out.println("Total Job Time : " + totalJobTime/1000000 + " milliseconds");
+		System.out.println("_______________________________________________________________________________");
+		System.out.println(String.format("%-40s %s" ,"Number of CPUs:", numCPU));
+		System.out.println(String.format("%-40s %s" , "Number of Pages:",numPages));
+		System.out.println(String.format("%-40s %s" ,"Page Size: ",pageSize));
+		System.out.println(String.format("%-40s %s" ,"Sorting Method Used: ",sort));
+		System.out.println(String.format("%-40s %s" ,"Total IO count: ",IOCount));
+		System.out.println(String.format("%-40s %s" ,"Terminate Queue Size: ",os.terminated.size()));
+		System.out.println(String.format("%-40s %s" ,"Total time elapsed: ",Stopwatch.getElapsedTimeSecs() + " milliseconds"));
+		System.out.println(String.format("%-40s %s" ,"Average job time: ",((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" ));
+		System.out.println(String.format("%-40s %s" ,"Average waiting Time: ",avgWait/1000 + " microseconds"));
+		System.out.println(String.format("%-40s %s" ,"Total Job Time : ",totalJobTime/1000000 + " milliseconds"));
 		for (int z = 0; z < idleTimes.length; z++)
 		{
 			idleTimes[z] = (Stopwatch.getElapsedTime()) - idleTimes[z];
-			System.out.println("CPU Number: " + z + " was idle for " + idleTimes[z]/1000000 + " milliseconds");
+			System.out.println(String.format("%-40s %s" ,"CPU " + z + " was idle for: ",idleTimes[z]/1000000 + " milliseconds"));
 		}
-		System.out.println("-------------------------------------------------------------------------------");
+		System.out.println("_______________________________________________________________________________");
 		
 		fout.flush();
 		fout.close();
