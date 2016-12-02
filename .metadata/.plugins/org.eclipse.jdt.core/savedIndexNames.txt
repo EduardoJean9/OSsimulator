@@ -8,9 +8,8 @@ INDEX VERSION 1.129+C:\Users\Elizabeth\Documents\GitHub\OSsimulator\.metadata\.p
 471236001.index
 781808.index
 808374113.index
-618723895.index
 2637943071.index
-4283554042.index
+618723895.index
 4184201189.index
 985286902.index
 351221734.index
