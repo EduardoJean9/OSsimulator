@@ -238,7 +238,7 @@ public class Driver {
 		System.out.println(String.format("%-40s %s" ,"Total IO count: ",IOCount));
 		System.out.println(String.format("%-40s %s" ,"Terminate Queue Size: ",os.terminated.size()));
 		System.out.println(String.format("%-40s %s" ,"Total time elapsed: ",Stopwatch.getElapsedTimeSecs() + " milliseconds"));
-		System.out.println(String.format("%-40s %s" ,"Average job time: ",((Stopwatch.getElapsedTimeSecs())/30) + " milliseconds" ));
+		System.out.println(String.format("%-40s %s" ,"Average job time: ",((totalJobTime/30)/1000000) + " milliseconds" ));
 		System.out.println(String.format("%-40s %s" ,"Average waiting Time: ",avgWait/1000 + " microseconds"));
 		System.out.println(String.format("%-40s %s" ,"Total Job Time : ",totalJobTime/1000000 + " milliseconds"));
 		for (int z = 0; z < idleTimes.length; z++)

@@ -332,6 +332,6 @@ public class CPU extends Thread{
 		}
 		endTime = System.nanoTime();
 		this.jobTime = ((endTime - this.startTime));
-		System.out.println("Job " + this.jobNumber + " Finished in " + this.jobTime + " nanoseconds");
+		System.out.println("Job " + this.jobNumber + " Finished in " + (this.jobTime/1000000) + " milliseconds");
 	}
 }
