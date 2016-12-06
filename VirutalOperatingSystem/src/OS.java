@@ -54,7 +54,7 @@ public class OS {
 			//2- Priority
 			//3- SJF
 			
-			if(sortingMethod == 1)
+			if(sortingMethod == 1) //FCFS
 			{
 				return;
 			}
@@ -73,7 +73,7 @@ public class OS {
 		        }
 		    }
 			
-			else 
+			else //SJF
 			{
 				PCB temp;
 		        for(int i=0; i < ready.size()-1; i++){

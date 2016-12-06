@@ -23,7 +23,6 @@ public class Driver {
 					for(int l = 1; l<=3; l++){ //sorting method
 						Stopwatch.start();
 						int numPages, pageSize, numCPU, sortingMethod;
-			
 						sortingMethod = l;
 						numCPU = k;
 						pageSize = j;
